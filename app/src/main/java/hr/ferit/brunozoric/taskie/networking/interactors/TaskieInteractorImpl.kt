@@ -13,7 +13,8 @@ import retrofit2.Callback
 
 class TaskieInteractorImpl(private val apiService: TaskieApiService) : TaskieInteractor {
     override fun getTask(id: String, getTaskCallback: Callback<BackendTask>) {
-        apiService.getTask(id).enqueue(getTaskCallback)    }
+        apiService.getTask(id).enqueue(getTaskCallback)
+    }
 
     override fun deleteTask(taskId: String, getDeleteTaskCallback: Callback<DeleteTaskResponse>) {
         apiService.deleteTask(taskId).enqueue(getDeleteTaskCallback)

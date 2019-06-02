@@ -1,6 +1,7 @@
 package hr.ferit.brunozoric.taskie.ui.fragments
 
 import android.os.Bundle
+import android.text.Editable
 import android.view.View
 import hr.ferit.brunozoric.taskie.R
 import hr.ferit.brunozoric.taskie.Taskie
@@ -8,6 +9,7 @@ import hr.ferit.brunozoric.taskie.common.EXTRA_TASK_ID
 import hr.ferit.brunozoric.taskie.common.RESPONSE_OK
 import hr.ferit.brunozoric.taskie.common.displayToast
 import hr.ferit.brunozoric.taskie.model.BackendTask
+import hr.ferit.brunozoric.taskie.model.PriorityColor
 import hr.ferit.brunozoric.taskie.model.Task
 import hr.ferit.brunozoric.taskie.networking.BackendFactory
 import hr.ferit.brunozoric.taskie.persistence.Repository
@@ -40,7 +42,7 @@ class TaskDetailsFragment : BaseFragment(), UpdateTaskFragmentDialog.EditTaskLIs
     }
 
     private fun initListeners() {
-        addTask.setOnClickListener { editTask(taskID.toString()) }
+        updateTaskButton.setOnClickListener { editTask(taskID) }
     }
 
     private fun editTask(taskID: String) {
@@ -67,7 +69,6 @@ class TaskDetailsFragment : BaseFragment(), UpdateTaskFragmentDialog.EditTaskLIs
 
     private fun getTaskCallback(): Callback<BackendTask> = object : Callback<BackendTask> {
         override fun onFailure(call: Call<BackendTask>, t: Throwable) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
 
         override fun onResponse(call: Call<BackendTask>, response: Response<BackendTask>) {
@@ -84,17 +85,21 @@ class TaskDetailsFragment : BaseFragment(), UpdateTaskFragmentDialog.EditTaskLIs
     private fun handleOkResponse(response: Response<BackendTask>) {
 
         response.body()?.run {
-            newTaskTitleInput.setText(this.title)
-            newTaskDescriptionInput.setText(this.content)
-            prioritySelector.setSelection(this.taskPriority-1)
+            detailsTaskTitle.text= Editable.Factory.getInstance().newEditable(title)
+            detailsTaskDescription.text=Editable.Factory.getInstance().newEditable(content)
+            detailsPriorityView.setBackgroundResource(when(taskPriority){
+                1 -> PriorityColor.LOW.getColor()
+                2-> PriorityColor.MEDIUM.getColor()
+                else -> PriorityColor.HIGH.getColor()
+            })
         }
 
     }
     companion object {
         const val NO_TASK = "empty"
 
-        fun newInstance(taskId: Int): TaskDetailsFragment {
-            val bundle = Bundle().apply { putInt(EXTRA_TASK_ID, taskId) }
+        fun newInstance(taskId: String): TaskDetailsFragment {
+            val bundle = Bundle().apply { putString(EXTRA_TASK_ID, taskId) }
             return TaskDetailsFragment().apply { arguments = bundle }
         }
     }

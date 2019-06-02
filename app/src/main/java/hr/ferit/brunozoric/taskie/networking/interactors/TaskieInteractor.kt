@@ -12,7 +12,7 @@ import retrofit2.Callback
 
 interface TaskieInteractor {
 
-    fun getTask(id:String, getTaskCallback: Callback<BackendTask>)
+    fun getTask(id: String, getTaskCallback: Callback<BackendTask>)
 
     fun getTasks(taskieResponseCallback: Callback<GetTasksResponse>)
 

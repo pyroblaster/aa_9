@@ -27,9 +27,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class TasksFragment : BaseFragment(), AddTaskFragmentDialog.TaskAddedListener, RefreshAllTasks {
-    override fun refreshTasks() {
-        getAllTasks()
-    }
+
 
     private val adapter by lazy { TaskAdapter({ onItemSelected(it) }, { onItemSwiped(it) }) }
     private val taskieInteractor = BackendFactory.getTaskieInteractor()
@@ -48,6 +46,9 @@ class TasksFragment : BaseFragment(), AddTaskFragmentDialog.TaskAddedListener, R
         initListeners()
     }
 
+    override fun refreshTasks() {
+        getAllTasks()
+    }
 
     override fun onResume() {
         super.onResume()
