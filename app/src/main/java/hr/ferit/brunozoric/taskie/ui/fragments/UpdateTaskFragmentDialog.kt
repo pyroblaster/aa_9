@@ -31,6 +31,12 @@ class UpdateTaskFragmentDialog:DialogFragment(){
     lateinit var task: BackendTask
     var taskId:String = ""
 
+    companion object {
+        fun newInstance(): UpdateTaskFragmentDialog {
+            return UpdateTaskFragmentDialog()
+        }
+    }
+
     interface EditTaskLIstener {
         fun onTaskEdited(backendTask: BackendTask)
     }
@@ -79,12 +85,13 @@ class UpdateTaskFragmentDialog:DialogFragment(){
     private fun editTask() {
         if (isInputEmpty()){
             context?.displayToast(getString(R.string.emptyFields))
-            return
         }
+        else{
         val title = tasktTitleUpdate.text.toString()
         val description = taskDescUpdate.text.toString()
         val priority = taskPriorityUpdate.selectedItemPosition
         taskieInteractor.editTask(EditTaskRequest(taskId, title, description, priority),editTaskCallback())
+        }
     }
 
 
@@ -103,7 +110,6 @@ class UpdateTaskFragmentDialog:DialogFragment(){
 
     private fun getTaskCallback(): Callback<BackendTask> = object : Callback<BackendTask> {
         override fun onFailure(call: Call<BackendTask>, t: Throwable) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
 
         override fun onResponse(call: Call<BackendTask>, response: Response<BackendTask>) {
@@ -118,7 +124,6 @@ class UpdateTaskFragmentDialog:DialogFragment(){
 
     private fun editTaskCallback() = object:  Callback<BackendTask> {
         override fun onFailure(call: Call<BackendTask>, t: Throwable) {
-
         }
 
         override fun onResponse(call: Call<BackendTask>, response: Response<BackendTask>) {
@@ -142,24 +147,15 @@ class UpdateTaskFragmentDialog:DialogFragment(){
     }
 
 
+
     private fun handleSomethingWentWrong() = Taskie.instance.displayToast("Something went wrong!")
 
     private fun handleOkResponse(response: Response<BackendTask>) {
 
         response.body()?.run {
-            newTaskTitleInput.setText(this.title)
-            newTaskDescriptionInput.setText(this.content)
-            prioritySelector.setSelection(this.taskPriority-1)
-            task = this
 
         }
 
-    }
-
-    companion object {
-        fun newInstance(): UpdateTaskFragmentDialog {
-            return UpdateTaskFragmentDialog()
-        }
     }
 
 }

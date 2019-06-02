@@ -36,7 +36,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun callRefreshTasks(){
-        refreshListener!!.refreshTasks()
+        refreshListener?.refreshTasks()
     }
 
 }
