@@ -2,7 +2,9 @@ package hr.ferit.brunozoric.taskie.networking
 
 import hr.ferit.brunozoric.taskie.model.BackendTask
 import hr.ferit.brunozoric.taskie.model.request.AddTaskRequest
+import hr.ferit.brunozoric.taskie.model.request.EditTaskRequest
 import hr.ferit.brunozoric.taskie.model.request.UserDataRequest
+import hr.ferit.brunozoric.taskie.model.response.DeleteTaskResponse
 import hr.ferit.brunozoric.taskie.model.response.GetTasksResponse
 import hr.ferit.brunozoric.taskie.model.response.LoginResponse
 import hr.ferit.brunozoric.taskie.model.response.RegisterResponse
@@ -10,6 +12,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 
 interface TaskieApiService {
@@ -27,12 +30,8 @@ interface TaskieApiService {
     fun save(@Body taskData: AddTaskRequest): Call<BackendTask>
 
     @POST("/api/note/delete")
-    fun deletTask(){
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    fun deleteTask(@Query("id")id:String): Call<DeleteTaskResponse>
 
     @POST("/api/note/edit")
-    fun editTask(){
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    fun editTask(@Body editTaskRequest: EditTaskRequest): Call <BackendTask>
 }
