@@ -3,6 +3,8 @@
     <dimen name="match_constraint">0dp</dimen>
     <dimen name="textSizeHeading">26sp</dimen>
     <dimen name="marginLarge">12dp</dimen>
+    <dimen name="marginMiddle">8dp</dimen>
+    <dimen name="marginSmall">4dp</dimen>
     <dimen name="detailsPriorityWidth">100dp</dimen>
     <dimen name="detailsPriorityHeight">100dp</dimen>
     <dimen name="itemPriorityWidth">36dp</dimen>

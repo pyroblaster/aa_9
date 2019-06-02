@@ -2,13 +2,19 @@ package hr.ferit.brunozoric.taskie.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import hr.ferit.brunozoric.taskie.R
+import hr.ferit.brunozoric.taskie.Taskie
 import hr.ferit.brunozoric.taskie.common.*
 import hr.ferit.brunozoric.taskie.model.Task
 import hr.ferit.brunozoric.taskie.model.BackendTask
+import hr.ferit.brunozoric.taskie.model.response.DeleteTaskResponse
 import hr.ferit.brunozoric.taskie.model.response.GetTasksResponse
 import hr.ferit.brunozoric.taskie.networking.BackendFactory
 import hr.ferit.brunozoric.taskie.persistence.Repository
@@ -20,10 +26,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TasksFragment : BaseFragment(), AddTaskFragmentDialog.TaskAddedListener {
+class TasksFragment : BaseFragment(), AddTaskFragmentDialog.TaskAddedListener, RefreshAllTasks {
+    override fun refreshTasks() {
+        getAllTasks()
+    }
 
-    private val adapter by lazy { TaskAdapter { onItemSelected(it) } }
-    private val interactor = BackendFactory.getTaskieInteractor()
+    private val adapter by lazy { TaskAdapter({ onItemSelected(it) }, { onItemSwiped(it) }) }
+    private val taskieInteractor = BackendFactory.getTaskieInteractor()
 
     companion object {
         fun newInstance(): Fragment {
@@ -39,12 +48,38 @@ class TasksFragment : BaseFragment(), AddTaskFragmentDialog.TaskAddedListener {
         initListeners()
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        getAllTasks()
+    }
+
     private fun initUi() {
         progress.visible()
         noData.visible()
         tasksRecyclerView.layoutManager = LinearLayoutManager(context)
         tasksRecyclerView.adapter = adapter
         getAllTasks()
+    }
+
+    private fun onItemSwiped(it: BackendTask) {
+        taskieInteractor.deleteTask(it.id, deleteTaskCallback())
+        //adapter.deleteData(viewHolder.adapterPosition)
+        Toast.makeText(this.context, "Task deleted", Toast.LENGTH_LONG).show()
+        refreshTasks()
+    }
+
+    private fun deleteTaskCallback(): Callback<DeleteTaskResponse> = object : Callback<DeleteTaskResponse> {
+        override fun onFailure(call: Call<DeleteTaskResponse>?, t: Throwable?) {
+            progress.gone()
+        }
+
+        override fun onResponse(call: Call<DeleteTaskResponse>?, response: Response<DeleteTaskResponse>) {
+            if (response.isSuccessful) {
+                progress.gone()
+                getAllTasks()
+            }
+        }
     }
 
     private fun initListeners() {
@@ -71,7 +106,7 @@ class TasksFragment : BaseFragment(), AddTaskFragmentDialog.TaskAddedListener {
 
     private fun getAllTasks() {
         progress.visible()
-        interactor.getTasks(getTaskieCallback())
+        taskieInteractor.getTasks(getTaskieCallback())
     }
 
     private fun getTaskieCallback(): Callback<GetTasksResponse> = object : Callback<GetTasksResponse> {

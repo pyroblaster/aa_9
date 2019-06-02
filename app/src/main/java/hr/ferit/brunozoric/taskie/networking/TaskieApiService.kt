@@ -9,10 +9,7 @@ import hr.ferit.brunozoric.taskie.model.response.GetTasksResponse
 import hr.ferit.brunozoric.taskie.model.response.LoginResponse
 import hr.ferit.brunozoric.taskie.model.response.RegisterResponse
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 
 interface TaskieApiService {
@@ -34,4 +31,7 @@ interface TaskieApiService {
 
     @POST("/api/note/edit")
     fun editTask(@Body editTaskRequest: EditTaskRequest): Call <BackendTask>
+
+    @GET("/api/note/{taskID}")
+    fun getTask(@Path("taskID") id:String): Call<BackendTask>
 }

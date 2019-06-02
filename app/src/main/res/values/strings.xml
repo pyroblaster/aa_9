@@ -20,4 +20,11 @@
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="hint_name">Name</string>
+
+    <string name="refreshTasks">Refresh tasks</string>
+    <string name="taskHeadingUpdate">Update task</string>
+    <string name="editTaskNameUpdate">New task title:</string>
+    <string name="editTaskDescUpdate">New task description:</string>
+    <string name="editTaskPrioUpdate">New task priority:</string>
+    <string name="deleteAllTasks">Delete all tasks</string>
 </resources>

@@ -5,8 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import hr.ferit.brunozoric.taskie.R
 import hr.ferit.brunozoric.taskie.model.BackendTask
+import hr.ferit.brunozoric.taskie.model.Task
 
-class TaskAdapter(private val onItemSelected: (BackendTask) -> Unit) : Adapter<TaskHolder>() {
+class TaskAdapter(private val onItemSelected: (BackendTask) -> Unit, private val onItemSwiped: (BackendTask) -> Unit) : Adapter<TaskHolder>() {
 
     private val data: MutableList<BackendTask> = mutableListOf()
 
@@ -18,12 +19,20 @@ class TaskAdapter(private val onItemSelected: (BackendTask) -> Unit) : Adapter<T
     override fun getItemCount() = data.size
 
     override fun onBindViewHolder(holder: TaskHolder, position: Int) {
-        holder.bindData(data[position], onItemSelected)
+        holder.bindData(data[position], onItemSelected, onItemSwiped)
+    }
+
+    fun getData(position: Int):BackendTask{
+        return data[position]
     }
 
     fun addData(item: BackendTask) {
         data.add(item)
         notifyItemInserted(data.size)
+    }
+
+    fun deleteData(position: Int){
+        data.removeAt(position)
     }
 
     fun setData(data: MutableList<BackendTask>) {
