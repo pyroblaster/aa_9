@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import hr.ferit.brunozoric.taskie.R
 import hr.ferit.brunozoric.taskie.Taskie
@@ -24,12 +25,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UpdateTaskFragmentDialog:DialogFragment(){
+class UpdateTaskFragmentDialog : DialogFragment() {
 
     private val taskieInteractor = BackendFactory.getTaskieInteractor()
     private var editTaskListener: EditTaskLIstener? = null
     lateinit var task: BackendTask
-    var taskId:String = ""
+    var taskId: String = ""
 
     companion object {
         fun newInstance(): UpdateTaskFragmentDialog {
@@ -46,12 +47,12 @@ class UpdateTaskFragmentDialog:DialogFragment(){
         setStyle(STYLE_NO_TITLE, R.style.FragmentDialogTheme)
     }
 
-    private fun onTaskEdited(backendTask: BackendTask){
+    private fun onTaskEdited(backendTask: BackendTask) {
         editTaskListener?.onTaskEdited(backendTask)
     }
 
 
-    fun setEditTaskLIstener(listener: EditTaskLIstener){
+    fun setEditTaskLIstener(listener: EditTaskLIstener) {
         editTaskListener = listener
     }
 
@@ -71,30 +72,29 @@ class UpdateTaskFragmentDialog:DialogFragment(){
         initListeners()
     }
 
-    private fun initUi(){
+    private fun initUi() {
         context?.let {
-            taskPriorityUpdate.adapter = ArrayAdapter<PriorityColor>(it, android.R.layout.simple_spinner_dropdown_item, PriorityColor.values())
+            taskPriorityUpdate.adapter =
+                ArrayAdapter<PriorityColor>(it, android.R.layout.simple_spinner_dropdown_item, PriorityColor.values())
             taskPriorityUpdate.setSelection(0)
         }
     }
 
-    private fun initListeners(){
-        saveTaskUpdate.setOnClickListener{ editTask() }
+    private fun initListeners() {
+        saveTaskUpdate.setOnClickListener { editTask() }
     }
 
     private fun editTask() {
-        if (isInputEmpty()){
+        if (isInputEmpty()) {
             context?.displayToast(getString(R.string.emptyFields))
-        }
-        else{
-        val title = tasktTitleUpdate.text.toString()
-        val description = taskDescUpdate.text.toString()
-        val priority = taskPriorityUpdate.selectedItemPosition
-        taskieInteractor.editTask(EditTaskRequest(taskId, title, description, priority),editTaskCallback())
+        } else {
+            val title = tasktTitleUpdate.text.toString()
+            val description = taskDescUpdate.text.toString()
+            val priority = taskPriorityUpdate.selectedItemPosition+1
+            taskieInteractor.editTask(EditTaskRequest(taskId, title, description, priority), editTaskCallback())
+            dismiss()
         }
     }
-
-
 
 
     private fun clearUi() {
@@ -122,7 +122,7 @@ class UpdateTaskFragmentDialog:DialogFragment(){
         }
     }
 
-    private fun editTaskCallback() = object:  Callback<BackendTask> {
+    private fun editTaskCallback() = object : Callback<BackendTask> {
         override fun onFailure(call: Call<BackendTask>, t: Throwable) {
         }
 
@@ -136,6 +136,7 @@ class UpdateTaskFragmentDialog:DialogFragment(){
         }
 
     }
+
     private fun updateFailedResponse() {
 
     }
@@ -147,13 +148,15 @@ class UpdateTaskFragmentDialog:DialogFragment(){
     }
 
 
-
     private fun handleSomethingWentWrong() = Taskie.instance.displayToast("Something went wrong!")
 
     private fun handleOkResponse(response: Response<BackendTask>) {
 
         response.body()?.run {
-
+            tasktTitleUpdate.setText(this.title)
+            taskDescUpdate.setText(this.content)
+            taskPriorityUpdate.setSelection(this.taskPriority-1)
+            task = this
         }
 
     }
