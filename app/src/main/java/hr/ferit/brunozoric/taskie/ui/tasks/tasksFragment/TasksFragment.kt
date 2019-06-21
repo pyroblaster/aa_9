@@ -1,4 +1,4 @@
-package hr.ferit.brunozoric.taskie.ui.tasks
+package hr.ferit.brunozoric.taskie.ui.tasks.tasksFragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,6 +15,8 @@ import hr.ferit.brunozoric.taskie.networking.BackendFactory
 import hr.ferit.brunozoric.taskie.ui.activities.ContainerActivity
 import hr.ferit.brunozoric.taskie.ui.adapters.TaskAdapter
 import hr.ferit.brunozoric.taskie.ui.fragments.base.BaseFragment
+import hr.ferit.brunozoric.taskie.ui.tasks.RefreshAllTasks
+import hr.ferit.brunozoric.taskie.ui.tasks.addTaskDialog.AddTaskFragmentDialog
 import kotlinx.android.synthetic.main.fragment_tasks.*
 import retrofit2.Call
 import retrofit2.Callback

@@ -5,7 +5,7 @@ import android.view.MenuItem
 import hr.ferit.brunozoric.taskie.R
 import hr.ferit.brunozoric.taskie.ui.activities.base.BaseActivity
 import hr.ferit.brunozoric.taskie.ui.tasks.RefreshAllTasks
-import hr.ferit.brunozoric.taskie.ui.tasks.TasksFragment
+import hr.ferit.brunozoric.taskie.ui.tasks.tasksFragment.TasksFragment
 
 class MainActivity : BaseActivity() {
 

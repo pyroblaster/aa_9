@@ -1,4 +1,4 @@
-package hr.ferit.brunozoric.taskie.ui.tasks
+package hr.ferit.brunozoric.taskie.ui.tasks.addTaskDialog
 
 import android.os.Bundle
 import android.text.TextUtils.isEmpty
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import hr.ferit.brunozoric.taskie.R
 import hr.ferit.brunozoric.taskie.common.RESPONSE_OK
@@ -21,7 +22,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AddTaskFragmentDialog : DialogFragment() {
+class AddTaskFragmentDialog : DialogFragment(), AddTaskDialogContract.View {
 
     private var taskAddedListener: TaskAddedListener? = null
     private val interactor = BackendFactory.getTaskieInteractor()
@@ -113,6 +114,16 @@ class AddTaskFragmentDialog : DialogFragment() {
     private fun onTaskiesReceived(task: BackendTask) {
         taskAddedListener?.onTaskAdded(task)
         dismiss()
+    }
+
+    override fun onTaskAddedSuccess(task: BackendTask) {
+        taskAddedListener?.onTaskAdded(task)
+        context?.displayToast("Task added.")
+        dismiss()
+    }
+
+    override fun onTaskAddedFailure() {
+        context?.displayToast("Failure.")
     }
 
 
