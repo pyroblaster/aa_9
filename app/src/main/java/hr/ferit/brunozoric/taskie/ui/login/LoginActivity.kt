@@ -1,4 +1,4 @@
-package hr.ferit.brunozoric.taskie.ui.activities
+package hr.ferit.brunozoric.taskie.ui.login
 
 import android.content.Intent
 import hr.ferit.brunozoric.taskie.R
@@ -9,6 +9,8 @@ import hr.ferit.brunozoric.taskie.model.request.UserDataRequest
 import hr.ferit.brunozoric.taskie.model.response.LoginResponse
 import hr.ferit.brunozoric.taskie.networking.BackendFactory
 import hr.ferit.brunozoric.taskie.prefs.provideSharedPrefs
+import hr.ferit.brunozoric.taskie.ui.activities.MainActivity
+import hr.ferit.brunozoric.taskie.ui.registration.RegisterActivity
 import hr.ferit.brunozoric.taskie.ui.activities.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call

@@ -1,4 +1,4 @@
-package hr.ferit.brunozoric.taskie.ui.fragments
+package hr.ferit.brunozoric.taskie.ui.tasks
 
 import android.os.Bundle
 import android.text.TextUtils.isEmpty

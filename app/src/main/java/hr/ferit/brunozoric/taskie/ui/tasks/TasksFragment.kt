@@ -1,23 +1,17 @@
-package hr.ferit.brunozoric.taskie.ui.fragments
+package hr.ferit.brunozoric.taskie.ui.tasks
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import hr.ferit.brunozoric.taskie.R
-import hr.ferit.brunozoric.taskie.Taskie
 import hr.ferit.brunozoric.taskie.common.*
-import hr.ferit.brunozoric.taskie.model.Task
 import hr.ferit.brunozoric.taskie.model.BackendTask
 import hr.ferit.brunozoric.taskie.model.response.DeleteTaskResponse
 import hr.ferit.brunozoric.taskie.model.response.GetTasksResponse
 import hr.ferit.brunozoric.taskie.networking.BackendFactory
-import hr.ferit.brunozoric.taskie.persistence.Repository
 import hr.ferit.brunozoric.taskie.ui.activities.ContainerActivity
 import hr.ferit.brunozoric.taskie.ui.adapters.TaskAdapter
 import hr.ferit.brunozoric.taskie.ui.fragments.base.BaseFragment
@@ -26,7 +20,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TasksFragment : BaseFragment(), AddTaskFragmentDialog.TaskAddedListener, RefreshAllTasks {
+class TasksFragment : BaseFragment(),
+    AddTaskFragmentDialog.TaskAddedListener,
+    RefreshAllTasks {
 
 
     private val adapter by lazy { TaskAdapter({ onItemSelected(it) }, { onItemSwiped(it) }) }

@@ -4,8 +4,8 @@ import android.view.Menu
 import android.view.MenuItem
 import hr.ferit.brunozoric.taskie.R
 import hr.ferit.brunozoric.taskie.ui.activities.base.BaseActivity
-import hr.ferit.brunozoric.taskie.ui.fragments.RefreshAllTasks
-import hr.ferit.brunozoric.taskie.ui.fragments.TasksFragment
+import hr.ferit.brunozoric.taskie.ui.tasks.RefreshAllTasks
+import hr.ferit.brunozoric.taskie.ui.tasks.TasksFragment
 
 class MainActivity : BaseActivity() {
 
@@ -25,7 +25,7 @@ class MainActivity : BaseActivity() {
         return true
     }
 
-    private var refreshListener:RefreshAllTasks? = null
+    private var refreshListener: RefreshAllTasks? = null
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

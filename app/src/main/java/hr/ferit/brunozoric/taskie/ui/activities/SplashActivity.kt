@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import hr.ferit.brunozoric.taskie.prefs.provideSharedPrefs
+import hr.ferit.brunozoric.taskie.ui.registration.RegisterActivity
 
 class SplashActivity : AppCompatActivity() {
 

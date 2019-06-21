@@ -1,4 +1,4 @@
-package hr.ferit.brunozoric.taskie.ui.fragments
+package hr.ferit.brunozoric.taskie.ui.tasks
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import hr.ferit.brunozoric.taskie.R
 import hr.ferit.brunozoric.taskie.Taskie
@@ -18,8 +17,6 @@ import hr.ferit.brunozoric.taskie.model.PriorityColor
 
 import hr.ferit.brunozoric.taskie.model.request.EditTaskRequest
 import hr.ferit.brunozoric.taskie.networking.BackendFactory
-import kotlinx.android.synthetic.main.fragment_dialog_new_task.*
-import kotlinx.android.synthetic.main.fragment_task_details.*
 import kotlinx.android.synthetic.main.fragment_update_task.*
 import retrofit2.Call
 import retrofit2.Callback

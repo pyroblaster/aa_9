@@ -1,4 +1,4 @@
-package hr.ferit.brunozoric.taskie.ui.fragments
+package hr.ferit.brunozoric.taskie.ui.tasks
 
 import android.os.Bundle
 import android.text.Editable
@@ -12,16 +12,14 @@ import hr.ferit.brunozoric.taskie.model.BackendTask
 import hr.ferit.brunozoric.taskie.model.PriorityColor
 import hr.ferit.brunozoric.taskie.model.Task
 import hr.ferit.brunozoric.taskie.networking.BackendFactory
-import hr.ferit.brunozoric.taskie.persistence.Repository
 import hr.ferit.brunozoric.taskie.ui.fragments.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_dialog_new_task.*
 import kotlinx.android.synthetic.main.fragment_task_details.*
-import kotlinx.android.synthetic.main.fragment_tasks.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TaskDetailsFragment : BaseFragment(), UpdateTaskFragmentDialog.EditTaskLIstener  {
+class TaskDetailsFragment : BaseFragment(),
+    UpdateTaskFragmentDialog.EditTaskLIstener {
 
     private var taskID = NO_TASK
     private val taskieInteractor = BackendFactory.getTaskieInteractor()
